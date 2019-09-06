@@ -338,11 +338,13 @@ class QkUi:
             self.rightDisabled2()
 
     def rightBtnAdd1Cmd(self):
-        self.rightList1.insert(END, self.rightEntry1.get())
+        if self.rightEntry1.get():
+            self.rightList1.insert(END, self.rightEntry1.get())
         self.rightEntry1.delete(0, END)
 
     def rightBtnAdd2Cmd(self):
-        self.rightList2.insert(END, self.rightEntry2.get())
+        if self.rightEntry2.get():
+            self.rightList2.insert(END, self.rightEntry2.get())
         self.rightEntry2.delete(0, END)
 
     def rightBtnDel1Cmd(self):
