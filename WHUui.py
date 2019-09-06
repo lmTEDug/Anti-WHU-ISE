@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.messagebox import showerror, showinfo
 from WHUqk import WHU
 from PIL import Image, ImageTk
+from PIL import *
 from WHUerror import *
 
 
@@ -329,6 +330,8 @@ class QkUi:
             self.leftDisabled()
             self.rightActive1()
             self.rightActive2()
+            self.rightEntry3.delete(0, END)
+            self.rightEntry4.delete(0, END)
         else:
             self.leftActive()
             self.rightDisabled1()
@@ -350,25 +353,27 @@ class QkUi:
 
     def rightImg1Cmd(self):
         try:
-            self.pubWHU.loadVerifyCodeImg('pcode.jpg')
+            self.pubWHU.loadVerifyCodeImg('pcode.jpeg')
         except ServerError as error:
             self.infoList.insert(0, error)
         else:
             self.rightEntry3.delete(0, END)
-            self.pcode = ImageTk.PhotoImage(Image.open('pcode.jpg'))
+            self.pcode = ImageTk.PhotoImage(Image.open('pcode.jpeg'))
             self.rightImg1.config(image=self.pcode)
 
     def rightImg2Cmd(self):
         try:
-            self.pubRequiredWHU.loadVerifyCodeImg('prcode.jpg')
+            self.pubRequiredWHU.loadVerifyCodeImg('prcode.jpeg')
         except ServerError as error:
             self.infoList.insert(0, error)
         else:
             self.rightEntry4.delete(0, END)
-            self.prcode = ImageTk.PhotoImage(Image.open('prcode.jpg'))
+            self.prcode = ImageTk.PhotoImage(Image.open('prcode.jpeg'))
             self.rightImg2.config(image=self.prcode)
 
     def rightBtn1Cmd(self):
+        #这两个按钮的事件可以改成无限循环，直到选课成功
+        #但是要把对应的showinfo和showerror注释掉，防止弹出来一堆窗口
         self.pubWHU.setVerifyCode(self.rightEntry3.get())
         self.pubWHU.setCourses('pub', self.rightList1.get(0, END))
         self.pubWHU.startThread(name='公选')
